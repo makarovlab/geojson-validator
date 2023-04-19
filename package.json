@@ -1,12 +1,12 @@
 {
   "name": "spider-source-evaluation",
   "version": "0.1.0",
-  "homepage": "",
+  "homepage": "http://makarovlab.github.io/geojson-validator",
   "private": true,
   "main": "src/index.tsx",
   "author": {
     "name": "Maksim Makarov",
-    "email": "maksim.makarov@here.com"
+    "email": "maximmakarov1996@gmail.com"
   },
   "dependencies": {
     "@deck.gl/geo-layers": "^8.9.7",
