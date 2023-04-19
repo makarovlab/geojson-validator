@@ -1,0 +1,28 @@
+{
+    "ignorePatterns":["**/*.snap"],
+    "env": {
+        "browser": true
+    },
+    "extends": [
+        "eslint:recommended", 
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "prettier",
+        "plugin:storybook/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "eslint-plugin-react",
+        "prettier"
+    ],
+    "root": true,
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "no-debugger": 0
+    }
+}

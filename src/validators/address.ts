@@ -1,0 +1,1 @@
+export const isAddressValid = (address: string): boolean => true;

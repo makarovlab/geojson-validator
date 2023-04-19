@@ -1,0 +1,18 @@
+
+.editor-modal-file-drop {
+    display: flex;
+    min-height: 5rem;
+    padding: 8px;
+    width: 100%;
+    border: 3px dashed #fff;
+}
+
+.editor-modal-file-drop:hover {
+    border: 3px dashed lightgray;
+}
+
+.file-drop-target {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

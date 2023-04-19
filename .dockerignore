@@ -1,0 +1,5 @@
+node_modules
+npm-debug.log
+
+.gitlab-ci.yaml
+.gitignore
