@@ -3,8 +3,12 @@ import Sidebar from '../Sidebar';
 import FileUpload from '../FileUpload';
 import AttributeTable from '../AttributeTable';
 import GeoMap from '../GeoMap';
+import { ToastContainer, toast } from 'react-toastify';
 import { MainLayout } from './style'
+
 import { prepareReport } from '../../reports/reporter'
+import { parseJSON } from '../../utils/parseJSON'; 
+import { isGeoJSONValid } from '../../validators/geojson'; 
 
 import {
     Container,
@@ -47,22 +51,58 @@ interface IPrettyReport {
 
 const App = () => {
     
+    const [filename, setFilename] = useState<string>();
     const [geojson, setGeojson] = useState<IGeoJSON>();
     const [report, setReport] = useState<IPrettyReport[]>();
+
+    const toastError = (message: string) => {
+        toast.error(message, {
+            position: "top-right",
+            autoClose: false,
+            hideProgressBar: false,
+            theme: "colored",
+        });
+    }
+
+    const toastSuccess = (message: string) => {
+        toast.success(message, {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            theme: "colored",
+        });
+    }
     
     const onUploadFile = async (file: File | null) => {
         if(file && file.name.endsWith(".geojson")) {
-            const fileContent: string = await file.text();
-
-            // handle not good json
-            const parsedContent: IGeoJSON = JSON.parse(fileContent);
             
-            setReport(prepareReport(parsedContent));
-            setGeojson(parsedContent);
+            const fileContent: string = await file.text();
+            const parsedJSON = parseJSON(fileContent);
+            
+            if(parsedJSON !== null && isGeoJSONValid(parsedJSON)) {
+
+                setFilename(file.name);
+                setReport(prepareReport(parsedJSON));
+                setGeojson(parsedJSON);
+
+                toastSuccess("Successful upload");
+            } else {
+                const msg = `
+                    ERROR: Invalid GeoJSON structure.
+                    More info - https://geojson.org
+                `
+                toastError(msg);
+            }
+
         } else {
             if(file) {
                 const extension = file.name.split(".")[1]
-                alert(`ERROR: File must have .geojson extension! Your file has ${extension.toUpperCase()} format.`)
+                
+                const msg = `
+                    ERROR: File must have .geojson extension!
+                    Your file has ${extension.toUpperCase()} format.
+                `
+                toastError(msg);
             }
         }
     }
@@ -78,6 +118,7 @@ const App = () => {
                 </div> */}
             </Sidebar>
             <MainLayout>
+                <ToastContainer style={{ width: "fit-content", maxWidth: "400px", minWidth: "200px"}}/>
                 <Container className="m-0" fluid>
                     <Row>
                         <Col sm={12} md={12} lg={12} xl={6} xxl={4}>

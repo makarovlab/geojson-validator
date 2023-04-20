@@ -28,4 +28,8 @@ describe('email gap analyzer', () => {
     };
     expect(isEmailPresented(emailObject)).toBe(true);
   });
+
+  test('null email input', () => {
+    expect(isEmailPresented(null)).toBe(false);
+  });
 });

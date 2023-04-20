@@ -4,21 +4,23 @@ interface IStoreItem {
     "Customer Service": string[]
 }
 
-export const isEmailValid = (emailAttr: string | IStoreItem): boolean => {
-    switch (typeof(emailAttr)) {
-        case 'string':
-            return EmailValidator.validate(emailAttr);
+export const isEmailValid = (value: string | string[] | IStoreItem): boolean => {
+    if (typeof(value) === 'object' && Array.isArray(value)) {
+        return value.every((item: string) => EmailValidator.validate(item));
+    
+    } else if(
+        typeof(value) === 'object' &&
+        Object.prototype.hasOwnProperty.call(value, 'Customer Service')) {
+        
+        return (
+            value["Customer Service"].length > 0 
+            ?? value["Customer Service"].every((item: string) => EmailValidator.validate(item))
+        )
 
-        case 'object':
-            return (
-                emailAttr["Customer Service"].length > 0 
-                ?? emailAttr["Customer Service"].every((item: string) => EmailValidator.validate(item))
-            );
+    } else if(typeof(value) === 'string') {
+        return EmailValidator.validate(value);
 
-        case 'undefined':
-            return false;
-
-        default:
-            return EmailValidator.validate(emailAttr);
+    } else {
+        return false;
     }
 };

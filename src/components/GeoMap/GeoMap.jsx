@@ -9,14 +9,18 @@ const GeoMap = (props) => {
     const { style, geolayer } = props;
 
     useEffect(() => {
-        if (geolayer) {
-            const [lon, lat] = turf.centroid(geolayer).geometry.coordinates;
+        if(geolayer) {
+            try {
+                const [lon, lat] = turf.centroid(geolayer).geometry.coordinates;
             
-            setViewState({
-                latitude: lat,
-                longitude: lon,
-                zoom: 3,
-            })
+                setViewState({
+                    latitude: lat,
+                    longitude: lon,
+                    zoom: 3,
+                })
+            } catch(err) {
+                console.error(err.message)
+            } 
         }
     }, [geolayer])
     
