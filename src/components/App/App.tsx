@@ -62,6 +62,8 @@ const App = () => {
             autoClose: false,
             hideProgressBar: false,
             theme: "colored",
+            closeOnClick: false,
+            draggable: false,
         });
     }
 
