@@ -18,9 +18,8 @@ import {
 } from 'react-bootstrap';
 
 const geomapStyle = {
-    position: "relative", 
-    minHeight: "500px", 
-    height: "100%", 
+    position: "relative",
+    height: "600px", 
     width: "100%"
 }
 
@@ -133,7 +132,7 @@ const App = () => {
             </Sidebar>
             <MainLayout>
                 <ToastContainer style={{ width: "fit-content", maxWidth: "400px", minWidth: "200px"}}/>
-                <Container className="m-0" fluid>
+                <Container className="m-0" style={{height: "100%"}}>
                     <Row>
                         <Col>
                             <Card style={{padding: "1rem", marginBottom: '1rem'}}>
@@ -144,7 +143,7 @@ const App = () => {
                     </Row>
                     <Row>
                         <Col sm={12} md={12} lg={12} xl={6} xxl={4}>
-                            <Card style={{padding: "1rem"}}>
+                            <Card style={{padding: "1rem", overflowY: "auto", maxHeight: "600px"}}>
                                 <AttributeTable
                                     className="m-0"
                                     attribtesType="Attribute"
