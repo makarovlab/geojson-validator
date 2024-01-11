@@ -34,7 +34,7 @@ const AttributeTable = (props: IAttributeTable) => {
         if (percent === 0) {
             return Quality.None;
         } else {
-            return percent > 60 ? Quality.Good : (percent < 40 ? Quality.Bad : Quality.Middle);
+            return percent > 90 ? Quality.Good : (percent < 40 ? Quality.Bad : Quality.Middle);
         }
     }
 
@@ -42,7 +42,7 @@ const AttributeTable = (props: IAttributeTable) => {
         if (presentsPercent == 0) {
             return Quality.None;
         } else {
-            return validityPercent > 60 ? Quality.Good : (validityPercent < 40 ? Quality.Bad : Quality.Middle);
+            return validityPercent > 90 ? Quality.Good : (validityPercent < 40 ? Quality.Bad : Quality.Middle);
         }
     }
 
