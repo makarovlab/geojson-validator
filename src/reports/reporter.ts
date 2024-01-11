@@ -62,11 +62,8 @@ export function prepareReport(geojson: IGeoJSON): IPrettyReport[] {
 
     const report: IReportSchema  = {
         "ref": {presents: 0, validity: 0},
-        "brand": {presents: 0, validity: 0},
         "chain_name": {presents: 0, validity: 0},
         "chain_id": {presents: 0, validity: 0},
-        "@spider": {presents: 0, validity: 0},
-        "name": {presents: 0, validity: 0},
         "addr:full": {presents: 0, validity: 0},
         "addr:housenumber": {presents: 0, validity: 0},
         "addr:street": {presents: 0, validity: 0},

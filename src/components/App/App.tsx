@@ -121,6 +121,14 @@ const App = () => {
                 <ToastContainer style={{ width: "fit-content", maxWidth: "400px", minWidth: "200px"}}/>
                 <Container className="m-0" fluid>
                     <Row>
+                        <Col>
+                            <Card style={{padding: "1rem", marginBottom: '1rem'}}>
+                                <span><strong>Filename: </strong>{filename}</span>
+                                <span><strong>Places count: </strong>{geojson === undefined ? 0 : geojson.features.length}</span>
+                            </Card>
+                        </Col>                        
+                    </Row>
+                    <Row>
                         <Col sm={12} md={12} lg={12} xl={6} xxl={4}>
                             <Card style={{padding: "1rem"}}>
                                 <AttributeTable
