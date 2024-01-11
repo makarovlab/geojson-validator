@@ -73,6 +73,15 @@ const App = () => {
             theme: "colored",
         });
     }
+
+    const cleanState = () => {
+        setFilename("");
+        setReport([]);
+        setGeojson({
+            type: "FeatureCollection",
+            features: []
+        });
+    }
     
     const onUploadFile = async (file: File | null) => {
         if(file && file.name.endsWith(".geojson")) {
@@ -93,6 +102,7 @@ const App = () => {
                     More info - https://geojson.org
                 `
                 toastError(msg);
+                cleanState();
             }
 
         } else {
@@ -104,6 +114,7 @@ const App = () => {
                     Your file has ${extension.toUpperCase()} format.
                 `
                 toastError(msg);
+                cleanState();
             }
         }
     }
