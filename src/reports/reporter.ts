@@ -3,6 +3,7 @@ import GapAnalyzer from 'gapanalizers/gapanalyzer';
 
 interface IReportSchema {
     [key: string]: {
+        required: boolean,
         presents: number,
         validity: number,
     }
@@ -29,6 +30,7 @@ interface IGeoJSON {
 
 interface IPrettyReport {
     attrName: string,
+    attrRequired: boolean,
     attrPresents: number,
     attrValidity: number,
 }
@@ -39,6 +41,7 @@ function* genPrettyReport (report: IReportSchema): Generator<IPrettyReport> {
     for (const key of Object.keys(report)) {
         yield {
             "attrName": key,
+            "attrRequired": report[key]['required'],
             "attrPresents": report[key]['presents'],
             "attrValidity": report[key]['validity'],
         }
@@ -61,30 +64,30 @@ export function prepareReport(geojson: IGeoJSON): IPrettyReport[] {
     const count = geojson.features.length;
 
     const report: IReportSchema  = {
-        "ref": {presents: 0, validity: 0},
-        "chain_name": {presents: 0, validity: 0},
-        "chain_id": {presents: 0, validity: 0},
-        "addr:full": {presents: 0, validity: 0},
-        "addr:housenumber": {presents: 0, validity: 0},
-        "addr:street": {presents: 0, validity: 0},
-        "addr:city": {presents: 0, validity: 0},
-        "addr:state": {presents: 0, validity: 0},
-        "addr:postcode": {presents: 0, validity: 0},
-        "addr:country": {presents: 0, validity: 0},
-        "phones": {presents: 0, validity: 0},
-        "email": {presents: 0, validity: 0},
-        "website": {presents: 0, validity: 0},
-        "store_url": {presents: 0, validity: 0},
-        "operatingHours": {presents: 0, validity: 0},
-        "lat": {presents: 0, validity: 0},
-        "lon": {presents: 0, validity: 0},
+        "ref": {required: true, presents: 0, validity: 0},
+        "chain_name": {required: true, presents: 0, validity: 0},
+        "chain_id": {required: true, presents: 0, validity: 0},
+        "addr:full": {required: true, presents: 0, validity: 0},
+        "lat": {required: true, presents: 0, validity: 0},
+        "lon": {required: true, presents: 0, validity: 0},
+        "addr:housenumber": {required: false, presents: 0, validity: 0},
+        "addr:street": {required: false, presents: 0, validity: 0},
+        "addr:city": {required: false, presents: 0, validity: 0},
+        "addr:state": {required: false, presents: 0, validity: 0},
+        "addr:postcode": {required: false, presents: 0, validity: 0},
+        "addr:country": {required: false, presents: 0, validity: 0},
+        "phones": {required: false, presents: 0, validity: 0},
+        "email": {required: false, presents: 0, validity: 0},
+        "website": {required: false, presents: 0, validity: 0},
+        "store_url": {required: false, presents: 0, validity: 0},
+        "operatingHours": {required: false, presents: 0, validity: 0},
     }
 
     
     for (const feature of geojson.features) {
         for (const property of Object.keys(feature.properties)) {
             if (!Object.prototype.hasOwnProperty.call(report, property)){
-                report[property] = {presents: 0, validity: 0}
+                report[property] = {required: false, presents: 0, validity: 0}
             }
 
             const {presents, validity} = getPropertyReport(property, feature.properties[property])
@@ -97,11 +100,11 @@ export function prepareReport(geojson: IGeoJSON): IPrettyReport[] {
             const [lat, lon] = feature.geometry.coordinates;
 
             if (!Object.prototype.hasOwnProperty.call(report, 'lat')){
-                report['lat'] = {presents: 0, validity: 0};
+                report['lat'] = {required: true, presents: 0, validity: 0};
             }
 
             if (!Object.prototype.hasOwnProperty.call(report, 'lon')) {
-                report['lon'] = {presents: 0, validity: 0}
+                report['lon'] = {required: true, presents: 0, validity: 0}
             }
             
             const isAttrPresented: boolean = GapAnalyzer.analyze('coordinates', feature.geometry.coordinates);

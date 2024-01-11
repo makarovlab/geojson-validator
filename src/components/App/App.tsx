@@ -45,6 +45,7 @@ interface IGeoJSON {
 
 interface IPrettyReport {
     attrName: string,
+    attrRequired: boolean,
     attrPresents: number,
     attrValidity: number,
 }

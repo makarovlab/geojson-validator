@@ -2,6 +2,7 @@ import Table from 'react-bootstrap/Table';
 
 interface IAttribute {
     attrName: string,
+    attrRequired: boolean,
     attrPresents: number,
     attrValidity: number,
 }
@@ -62,7 +63,11 @@ const AttributeTable = (props: IAttributeTable) => {
             <tbody>
                 {attributes?.map((item, index) => (
                     <tr key={`${item.attrName}-${index}`}>
-                        <td>{item.attrName}</td>
+                        <td>{
+                            item.attrRequired
+                                ? <strong>{item.attrName}*</strong>
+                                : item.attrName
+                        }</td>
                         <td style={{color: "#fff", backgroundColor: calcPresentsColor(item.attrPresents)}}>
                             {item.attrPresents}%
                         </td>
