@@ -54,6 +54,7 @@ const AttributeTable = (props: IAttributeTable) => {
             "addr:city", "addr:state", "addr:postcode",
             "addr:country", "phones", "email", "website",
             "store_url", "operatingHours", "@spider", "name",
+            "brand"
         ]
         
         return attrsList.includes(attributeName);
