@@ -46,6 +46,19 @@ const AttributeTable = (props: IAttributeTable) => {
         }
     }
 
+    const isAttrInDataFormat = (attributeName: string): boolean => {
+        const attrsList = [
+            "ref", "chain_name", "chain_id",
+            "addr:full", "lat", "lon",
+            "addr:housenumber", "addr:street",
+            "addr:city", "addr:state", "addr:postcode",
+            "addr:country", "phones", "email", "website",
+            "store_url", "operatingHours", "@spider", "name",
+        ]
+        
+        return attrsList.includes(attributeName);
+    }
+
     return (
         <Table 
             bordered 
@@ -66,7 +79,9 @@ const AttributeTable = (props: IAttributeTable) => {
                         <td>{
                             item.attrRequired
                                 ? <strong>{item.attrName}*</strong>
-                                : item.attrName
+                                : isAttrInDataFormat(item.attrName)
+                                    ? item.attrName
+                                    : <span style={{color: "red"}}>{item.attrName}</span> 
                         }</td>
                         <td style={{color: "#fff", backgroundColor: calcPresentsColor(item.attrPresents)}}>
                             {item.attrPresents}%
